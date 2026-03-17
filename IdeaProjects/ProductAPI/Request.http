@@ -1,0 +1,60 @@
+###
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+ "name": "Laptop",
+  "price": 1200,
+  "category": "Electronics",
+  "description": "Gaming laptop",
+  "quantity": 10,
+  "isPaid": 1,
+  "isSeen": 0
+
+}
+###
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+ "name": "Iphone",
+  "price": 1100,
+  "category": "Electronics",
+  "description": "phone",
+  "quantity": 3,
+  "isPaid": 0,
+  "isSeen": 1
+
+}
+###
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+ "name": "Ford",
+  "price": 11000,
+  "category": "Cars",
+  "description": "Jeep",
+  "quantity": 1,
+  "isPaid": 0,
+  "isSeen": 1
+
+}
+###
+GET http://localhost:8080/products
+
+###
+GET http://localhost:8080/products/des/Gaming laptop
+
+###
+GET http://localhost:8080/products/paid/1
+
+###
+GET http://localhost:8080/products/search?key=phone
+
+###
+GET http://localhost:8080/products/search?key=phone&pageNo=1&pageSize=1
+
+###
+GET http://localhost:8080/products/search?key=phone&pageNo=1&pageSize=5&sortField=price&sortDir=ASC
+
