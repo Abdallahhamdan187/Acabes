@@ -21,15 +21,17 @@ public class ProductsController {
         this.productRepo = productRepo;
     }
 
-    @GetMapping("/search")
-    public Page<Product> find(@RequestParam(required = false) String key,
-                              @RequestParam(defaultValue = "1") int pageNo,
-                              @RequestParam(defaultValue = "10") int pageSize,
-                              @RequestParam(defaultValue = "id") String sortField,
-                              @RequestParam(defaultValue = "ASC") String sortDir) {
+    @GetMapping
+    public Page<Product> find( @RequestParam(required = false) String key,
+                               @RequestParam(required = false) String category,
+                               @RequestParam(required = false) Boolean isPaid,
+                               @RequestParam(defaultValue = "0") int pageNo,
+                               @RequestParam(defaultValue = "10") int pageSize,
+                               @RequestParam(defaultValue = "id") String sortField,
+                               @RequestParam(defaultValue = "ASC") String sortDir) {
 
 
-        return productService.find(key, pageNo, pageSize, sortField, sortDir);
+        return productService.find(key,category,isPaid, pageNo, pageSize, sortField, sortDir);
     }
 
     @PostMapping
@@ -38,29 +40,6 @@ public class ProductsController {
         return dto;
     }
 
-    @GetMapping
-    public List<ProductDto> getAllProducts() {
-        return productService.getAllProducts();
-    }
-
-    @GetMapping("/name/{name}")
-    public ProductDto searchByName(@PathVariable String name){
-        return productService.searchByName(name);
-    }
-
-    @GetMapping("/category/{name}")
-    public ProductDto searchByCategory(@PathVariable String name){
-        return productService.searchByCategory(name);
-    }
-
-    @GetMapping("/des/{name}")
-    public ProductDto searchByDescription(@PathVariable String name){
-        return productService.searchByDescription(name);
-    }
-    @GetMapping("/paid/{name}")
-    public List<ProductDto> searchByIsPaid(@PathVariable boolean name){
-        return productService.searchByIsPaid(name);
-    }
 
 
 }

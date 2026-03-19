@@ -40,21 +40,18 @@ Content-Type: application/json
   "isSeen": 1
 
 }
-###
-GET http://localhost:8080/products
+
 
 ###
-GET http://localhost:8080/products/des/Gaming laptop
+GET http://localhost:8080/products?pageNo=0&pageSize=2
 
 ###
-GET http://localhost:8080/products/paid/1
+GET http://localhost:8080/products?key=phone&pageNo=0&pageSize=5
 
 ###
-GET http://localhost:8080/products/search?key=phone
+GET http://localhost:8080/products?category=Electronics&pageNo=0&pageSize=5
 
 ###
-GET http://localhost:8080/products/search?key=phone&pageNo=1&pageSize=1
+GET http://localhost:8080/products?isPaid=true&pageNo=0&pageSize=5
 
-###
-GET http://localhost:8080/products/search?key=phone&pageNo=1&pageSize=5&sortField=price&sortDir=ASC
 

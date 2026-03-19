@@ -21,7 +21,7 @@ public class ProductService {
         this.productRepo = productRepo;
     }
 
-   public ProductDto addProduct(ProductDto dto) {
+    public ProductDto addProduct(ProductDto dto) {
         Product product = new Product();
         product.setName(dto.name());
         product.setPrice(dto.price());
@@ -49,22 +49,37 @@ public class ProductService {
     }
 
 
-    public Page<Product> find(String key,int pageNo, int pageSize, String sortField, String sortDir) {
+    public Page<Product> find(String key, String category, Boolean isPaid, int pageNo, int pageSize, String sortField, String sortDir) {
 
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
                 Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
 
-        if (key == null || key.isEmpty()) {
+        if ((key == null || key.isEmpty()) && (category == null || category.isEmpty()) && isPaid == null) {
+
             return productRepo.findAll(pageable);
         }
+        if (key != null && !key.isEmpty() && (category == null || category.isEmpty()) && isPaid == null) {
 
-        return productRepo.search(key,pageable);
+            return productRepo.search(key, pageable);
+        }
+        if (category != null && !category.isEmpty() && (key == null || key.isEmpty()) && isPaid == null) {
+
+            return productRepo.searchByCategory(category, pageable);
+        }
+        if (isPaid != null && (key == null || key.isEmpty()) && (category == null || category.isEmpty())) {
+
+            return productRepo.searchByIsPaid(isPaid, pageable);
+        }
+
+        return productRepo.findAll(pageable);
+
+
     }
 
 
-    public List<ProductDto> getAllProducts(){
+    public List<ProductDto> getAllProducts() {
 
         return productRepo.findAll().stream().map(
                 product -> new ProductDto(
@@ -80,20 +95,6 @@ public class ProductService {
                 )
         ).toList();
     }
-
-    public ProductDto searchByName(String name){
-        return productRepo.searchByName(name);
-    }
-    public ProductDto searchByCategory(String category){
-        return productRepo.searchByCategory(category);
-
-    }public ProductDto searchByDescription(String description){
-        return productRepo.searchByDescription(description);
-    }
-    public List<ProductDto> searchByIsPaid(boolean isPaid){
-        return productRepo.searchByIsPaid(isPaid);
-    }
-
 
 
 }
